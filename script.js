@@ -1,216 +1,92 @@
-const salarioBruto = document.querySelector("#salarioBruto");
+// Nome dos Integrantes:
+// Leonardo Saes Dias Franco    RA: 2161392323022
+// Gabriel Freitas de Lima	    RA: 2161392323029
+// Sérgio da Silva Dias Júnior 	RA: 2161392323019
+// Maxwell do Alves dos Santos	RA: 2161392323018
+// Matheus Rocha Martins		    RA: 2161392323035
 
-const valorVT = document.querySelector("#vt");
-const valorVR = document.querySelector("#vr");
+// Descrição do problema escolhido:
+// Escolhemos trabalhar um código que calcule os descontos do seu salário, um calculo de Holerite.
 
-const horaExtraCheckbox = document.querySelector("#horaExtraCheckbox");
-const horaExtra = document.querySelector("#horaExtra");
+// Descrição breve do funcionamento do algoritmo:
+// O algoritmo pede que o usuário preencha um formulário com as seguintes informações, seu salário bruto, gastos com condução, valor do vale refeição, horas extras trabalhadas, horas que voce faltou no serviço e a porcentagem que voce tem com o seguro de vida.
+// Ao clicar no botão calcular será exibido seu salário bruto, o valor que voce recebe por hora trabalhada, o valor que recebeu de hora extra, o valor gasto em condução, o valor gasto em alimentação, o valor descontado do seu salário caso voce tenha faltado algumas horas o valor do seu seguro de vida e o desconto do INSS.
+// Após isso será exibido a soma de todos os seus descontos e o salario liquido recebido no fim do mês. 
 
-const horaDescontoCheckbox = document.querySelector("#horaDescontoCheckbox");
-const horaDescontada = document.querySelector("#horaDescontada");
+// variáveis de entrada e suas definições:
+// salario, conducao, valeAlimentacao, horaExtra, faltas, seguroVida.
+// Todas as variáveis de entrada guardam o valor preenchido pelo o usuário
 
-const seguroCheckbox = document.querySelector("#seguroCheckbox");
-const porcentSeguro = document.querySelector("#porcentSeguro");
+// variáveis de saída e suas definições:
+// descontoFaltas, descontoSeguroVida, valorHora, valorHoraExtra, porcentMaxDescontadoVT, precoTotalVT, valorMaxVT, porcentMaxDescontadoVR, precoTotalVR, valorMaxVR, valorMaxVTdescontoINSS, totalDescontos, salarioLiquido.
+// A variavel porcentMaxDescontadoVT calcula a porcentagem de desconto do VT.
+// A variavel precoTotalVT calcula o gasto mensal da pessoa com condução.
+// A variavel valorMaxVT calcula precoTotalVT vezes o porcentMaxDescontadoVT.
+// A variavel porcentMaxDescontadoVR calcula a porcentagem de desconto do VT.
+// A variavel precoTotalVR calcula o gasto mensal da pessoa com alimentação.
+// A variavel valorMaxVR calcula precoTotalVR vezes o porcentMaxDescontadoVR.
+// A variavel descontoFaltas calcula o desconto no salario baseado no tanto de horas que a pessoa faltou.
+// A variavel descontoSeguroVida calcula o desconto no salario baseado na porcentagem que a pessoa tem de seguro de vida.
+// A variavel valorHora calcula o quanto a pessoa recebe por hora de trabalho (10 horas diárias de trabalho foi a base para o algoritmo).
+// A variavel valorHoraExtra calcula o quanto a pessoa recebera de acréscimo no salario por hora trabalhada (cada hora extra trabalhada equivale a 1.5 vezes a mais a hora trabalhada comum).
+// A variavel descontoINSS calcula o desconto no salario baseado no INSS da pessoa.
+// A variavel totalDescontos é a soma de todos os descontos que a pessoa recebeu no seu salario.
+// A variavel salarioLiquido é o valor que a pessoa recebe no final do mes apos todos os acréscimos e descontos no salario. 
 
-const popUp = document.querySelector(".pop-up");
+function calcularHolerite() {
 
+    const salario = parseFloat(document.getElementById('salario').value) || 0;
+    const conducao = parseFloat(document.getElementById('conducao').value) || 0;
+    const valeAlimentacao = parseFloat(document.getElementById('valeAlimentacao').value) || 0;
+    const horaExtra = parseFloat(document.getElementById('horaExtra').value) || 0;
+    const faltas = parseFloat(document.getElementById('faltas').value) || 0;
+    const seguroVida = parseFloat(document.getElementById('seguroVida').value) || 0;
 
-document.querySelector("form").addEventListener('submit', function (evento){
-  evento.preventDefault();
-})
+    const horasTrabalhadasNoMes = 220;
+    const diasUteisMes = 22;
 
-// const nome = prompt("Qual o seu nome?")
+    const valorHora = salario / horasTrabalhadasNoMes;
+    const descontoFaltas = (salario / horasTrabalhadasNoMes) * faltas;
+    const descontoSeguroVida = (salario * seguroVida) / 100;
+    const valorHoraExtra = (valorHora * 1.5) * horaExtra;
 
+    const porcentMaxDescontadoVT = 0.06;
+    const precoTotalVT = diasUteisMes * conducao;
+    const valorMaxVT = precoTotalVT * porcentMaxDescontadoVT;
+    
+    const porcentMaxDescontadoVR = 0.2;
+    const precoTotalVR = diasUteisMes * valeAlimentacao;
+    const valorMaxVR = precoTotalVR * porcentMaxDescontadoVR;
+    
+    let descontoINSS = 0;
+    if (salario <= 1320.0) {
+        descontoINSS = (salario * 0.075).toFixed(2);
+    } else if (salario <= 2571.29) {
+        descontoINSS = (salario * 0.09).toFixed(2);
+    } else if (salario <= 3856.94) {
+        descontoINSS = (salario * 0.12).toFixed(2);
+    } else if (salario <= 7507.49) {
+        descontoINSS = (salario * 0.14).toFixed(2);
+    } else {
+        descontoINSS = (salario * 0.14).toFixed(2);
+    }
 
-function CALCULAR_HOLERITE() {
+    const totalDescontos = valorMaxVT + valorMaxVR + descontoFaltas + descontoSeguroVida + parseFloat(descontoINSS);
+    const salarioLiquido = salario + valorHoraExtra - totalDescontos;
 
-  const descontoSeguroVida = calcularSeguro(salarioBruto.value, porcentSeguro.value);
-
-  const descontoIR = calculaIR(salarioBruto.value);
-
-  const descontoVR = VR(valorVR.value);
-
-  const descontoVT = VT(salarioBruto.value, valorVT.value);
-
-  const descontoINSS = calculaINSS(salarioBruto.value);
-
-  const horaExtraTrabalhada = calcularHoraExtra(salarioBruto.value, horaExtra.value);
-
-  const valorDescontado = calcularDescontoFalta(salarioBruto.value, horaDescontada.value);
-
-    // "descontoSeguroVida: " + descontoSeguroVida + '\n' +
-    // "descontoIR: " + descontoIR + '\n' +
-    // "descontoVR: " + descontoVR + '\n' +
-    // "descontoVT: " + descontoVT + '\n' +
-    // "descontoINSS: " + descontoINSS + '\n' +
-    // "horaExtraTrabalhada: " + horaExtraTrabalhada + '\n' + 
-    // "valorDescontado: " + valorDescontado
-
-
-    const diferenca = salarioBruto.value - descontoSeguroVida;
-    const diferenca2 = salarioBruto.value - descontoIR;
-
-    const salarioLiquido = salarioBruto.value - (descontoVR + descontoVT + descontoINSS + diferenca + diferenca2);
-
-    popUp.style.display = 'block';
-
-
-    console.log(salarioLiquido);
-
-    popUp.innerHTML = `
-    <h3>Descontos do Holerite</h3>
-    <span>Salário bruto: </span> ${salarioBruto.value}
-    <span>Salário líquido: </span> ${salarioLiquido}
-    `
-
+    const resultElement = document.getElementById('result');
+    resultElement.innerHTML = `
+        <span>Salário Bruto: R$ ${salario.toFixed(2)}</span>
+        <br>
+        <span>Valor da Hora: R$ ${valorHora.toFixed(2)}</span>
+        <span>Valor da Hora Extra: R$ ${valorHoraExtra.toFixed(2)}</span>
+        <span>Valor VT: R$ ${valorMaxVT.toFixed(2)}</span>
+        <span>Valor VR: R$ ${valorMaxVR.toFixed(2)}</span>
+        <span>Desconto Faltas: R$ ${descontoFaltas.toFixed(2)}</span>
+        <span>Desconto Seguro de Vida: R$ ${descontoSeguroVida.toFixed(2)}</span>
+        <span>Desconto INSS: R$ ${descontoINSS}</span>
+        <br>
+        <span>Total de Descontos: R$ ${totalDescontos.toFixed(2)}</span>
+        <span>Salário Líquido: R$ ${salarioLiquido.toFixed(2)}</span>
+    `;
 }
-
-function calcularSeguro(salario, porcentagemSeguro) {
-  const desconto = salario * (porcentagemSeguro / 100);
-  const salarioLiquido = salario - desconto;
-
-  return salarioLiquido;
-}
-
-function calculaIR(salario) {
-  if (salario < 2112) {
-    return 0;
-
-  } else if (salario < 2826.65) {
-    return salario - salario * 0.075;
-
-  } else if (salario < 3751.05) {
-    return salario - salario * 0.15;
-
-  } else if (salario < 4664.68) {
-    return salario - salario * 22.5;
-
-  } else if (salario > 4664.68) {
-    return salario - salario * 27.5;
-
-  } else {
-    return salario;
-  }
-}
-
-function VT(salario, valorVT) {
-  const diasUteis = 22;
-
-  const precoVTPorDia = valorVT;
-  const valorNecessarioTransporte = diasUteis * precoVTPorDia;
-  const valorMaximoDescontado = salario * 0.06;
-
-  let ContribuicaoEmpresa = 0;
-
-  if (valorNecessarioTransporte > valorMaximoDescontado) {
-    ContribuicaoEmpresa = (
-      valorNecessarioTransporte - valorMaximoDescontado
-    ).toFixed(2);
-  }
-
-  return valorNecessarioTransporte;
-}
-
-// valor máximo que pode ser descontado é 20% do valor total do benefício
-function VR(valorVR) {
-  const porcentMaxDescontado = 0.2;
-  const valorPorDia = valorVR;
-  const precoTotal = 22 * valorPorDia;
-
-  const valorMaxDescontado = precoTotal * porcentMaxDescontado;
-
-  return valorMaxDescontado.toFixed(2);
-}
-
-// FUNÇÃO PARA CALCULAR O INSS DESCONTADO DO HOLERITE
-
-function calculaINSS(salario) {
-  if (salario <= 1320.0) {
-    return (salario * 0.075).toFixed(2);
-
-  } else if (salario <= 2571.29) {
-    return (salario * 0.09).toFixed(2);
-
-  } else if (salario <= 3856.94) {
-    return (salario * 0.12).toFixed(2);
-
-  } else if (salario <= 7507.49) {
-    return (salario * 0.14).toFixed(2);
-
-  } else {
-    return (salario * 0.14).toFixed(2);
-  }
-}
-
-
-function calcularHoraExtra(salarioBruto, horaExtra) { 
-
-  const diasUteis = 22;
-  const horasComumTrabalhadas = 8;
-  
-  const horasPadrao = 220; //por mês
-
-  const salarioHora = (salarioBruto / diasUteis) / horasComumTrabalhadas; // 17 reais
-
-  let salarioAcrescidoHoraExtra = 0; 
-
-  // a hora extra é somado 50% a mais do que a hora normal, exemplo: ganhar 20 reais por hora, ele vai ganhar 50% a mais desse valor
-  const adicionalExtra = (salarioHora * horaExtra) * 1.5;
-
-  salarioAcrescidoHoraExtra = salarioHora * horasPadrao + adicionalExtra; 
-
-  return adicionalExtra.toFixed(2);
-}
-
-
-function calcularDescontoFalta(salarioBruto, horaDescontada) {
-  const diasUteis = 22;
-  const horasPadrao = 220;
-  const horasComumTrabalhadas = 8;
-
-  const salarioHora = (salarioBruto / diasUteis) / horasComumTrabalhadas;
-  
-  const horasTrabalhadas = horasPadrao - horaDescontada     
-
-  const salarioSemDesconto = salarioHora * horasPadrao;
-  const salarioComDesconto = salarioHora * horasTrabalhadas;
-  const valorDescontado = salarioSemDesconto - salarioComDesconto;
-
-  // return [
-  //   valorDescontado,
-  //   salarioSemDesconto,
-  //   salarioComDesconto
-  // ]
-
-  return valorDescontado;
-  
-}
-
-
-horaExtraCheckbox.addEventListener('change', () => {
-  if(horaExtraCheckbox.checked) {
-    horaExtra.disabled = false; //habilitado
-
-  } else {
-    horaExtra.value = '';
-    horaExtra.disabled = true; //desabilitado
-  }
-})
-
-horaDescontoCheckbox.addEventListener('change', () => {
-  if(horaDescontoCheckbox.checked) {
-    horaDescontada.disabled = false; //habilitado
-
-  } else {
-    horaDescontada.disabled = true; //desabilitado
-  }
-})
-
-seguroCheckbox.addEventListener('change', () => {
-  if(seguroCheckbox.checked) {
-    porcentSeguro.disabled = false; //habilitado
-
-  } else {
-    porcentSeguro.disabled = true; //desabilitado
-  }
-})

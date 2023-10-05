@@ -4,92 +4,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="O Objetivo do site é calcular o básico do Holerite de um funcionário CLT">
   <link rel="stylesheet" href="style.css">
-  <title>Cálculo de Holerite</title>
+  <title> Calcular Holerite</title>
 </head>
 
 <body>
+  <div class="card">
+    <h2>Calculadora de Holerite</h2>
+    <form id="holeriteForm">
 
-  <h1>
-    Calcular Holerite
-  </h1>
+      <label for="salario"> Salário Bruto: </label>
+      <input type="text" id="salario" required>
 
-  <form action="" method="get">
+      <label for="conducao"> Gastos com Condução Diária: </label>
+      <input type="text" id="conducao" required>
 
-    <!-- salarioBruto -->
-    <div class="input">
-      <label for="salarioBruto">Qual o seu salário bruto?</label>
-      <input type="text" id="salarioBruto">
-    </div>
+      <label for="valeAlimentacao"> Gastos com Alimentação Diária: </label>
+      <input type="text" id="valeAlimentacao" required>
 
-    <br>
+      <label for="horaExtra"> Horas Extras Trabalhadas: </label>
+      <input type="text" id="horaExtra" required>
 
-    <!-- vt -->
-    <div class="input">
-      <label for="vt">
-        Quanto você gasta por dia com condução?
-        <span>(desconto máximo 6%)</span>
-      </label>
+      <label for="faltas"> Horas de Falta: </label>
+      <input type="text" id="faltas" required>
 
-      <input type="number" id="vt">
-    </div>
+      <label for="seguroVida"> Porcentagem do Seguro de Vida: </label>
+      <input type="text" id="seguroVida" required>
 
-    <br>
+      <INPUT type="reset" value="Limpar">
 
-    <!-- vr -->
-    <div>
-      <label for="vr">Valor do Vale Refeição p/dia <span>(padrão 6%)</span></label>
-      <input type="number" id="vr">
-    </div>
+      <button type="button" onclick="calcularHolerite()"> Calcular </button>
 
-    <br>
-
-    <!-- hora extra -->
-    <div class="">
-      <input type="checkbox" id="horaExtraCheckbox">
-      <label for="horaExtraCheckbox">
-        Fez hora extra?
-        <a href="https://www.oitchau.com.br/blog/horas-extras-voce-sabe-como-calcular-veja-aqui/#:~:text=Por%20exemplo%2C%20se%20o%20colaborador,solu%C3%A7%C3%A3o%20%C3%A9%20R%2436%2C36."
-          target="_blank">
-          (base de cálculo de hora extra)
-        </a>
-      </label>
-
-      <div>
-        <label for="horaExtra">Quantas horas?</label>
-        <input type="number" id="horaExtra" disabled>
-      </div>
-    </div>
-
-    <br>
-    <!-- hora descontada -->
-    <div class="">
-      <input type="checkbox" id="horaDescontoCheckbox">
-      <label for="horaDescontoCheckbox">Teve horas descontada no mês?</label>
-
-      <div>
-        <label for="horaDescontada">Quantas horas?</label>
-        <input type="number" id="horaDescontada" disabled>
-      </div>
-    </div>
-
-    <br>
-
-    <!-- seguro de vida -->
-    <div class="">
-      <input type="checkbox" id="seguroCheckbox">
-      <label for="seguroCheckbox">Possui seguro de vida?</label>
-
-      <div>
-        <label for="porcentSeguro">Porcentagem do seguro?</label>
-        <input type="number" id="porcentSeguro" disabled>
-      </div>
-    </div>
-
-    <button onclick="CALCULAR_HOLERITE()">Calcular</button>
-  </form>
-
-  <div class="pop-up">
+    </form>
+    <div id="result"></div>
   </div>
 
   <script src="script.js"></script>
