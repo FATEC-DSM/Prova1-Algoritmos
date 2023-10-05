@@ -71,27 +71,6 @@ function calcularHolerite() {
         descontoINSS = (salario * 0.14).toFixed(2);
     }
 
-    let impostoRenda = 0;
-    if (salario < 2112) {
-      impostoRenda = 0;
-  
-    } else if (salario < 2826.65) {
-      impostoRenda = salario - salario * 0.075;
-  
-    } else if (salario < 3751.05) {
-      impostoRenda = salario - salario * 0.15;
-  
-    } else if (salario < 4664.68) {
-      impostoRenda = salario - salario * 22.5;
-  
-    } else if (salario > 4664.68) {
-      impostoRenda = salario - salario * 27.5;
-  
-    } else {
-      impostoRenda = salario;
-    }
-
-
     const totalDescontos = valorMaxVT + valorMaxVR + descontoFaltas + descontoSeguroVida + parseFloat(descontoINSS);
     const salarioLiquido = salario + valorHoraExtra - totalDescontos;
 
@@ -106,11 +85,6 @@ function calcularHolerite() {
         <span>Desconto Faltas: R$ ${descontoFaltas.toFixed(2)}</span>
         <span>Desconto Seguro de Vida: R$ ${descontoSeguroVida.toFixed(2)}</span>
         <span>Desconto INSS: R$ ${descontoINSS}</span>
-        <span>Desconto Imposto de Renda: R$ ${impostoRenda} 
-          <small>
-            <a href="https://www.creditas.com/exponencial/tabela-imposto-de-renda/" target="_blank">(base de cálculo)</a>
-          </small>
-        </span>
         <br>
         <span class="total">Total de Descontos: R$ ${totalDescontos.toFixed(2)}</span>
         <span class="total">Salário Líquido: R$ ${salarioLiquido.toFixed(2)}</span>
