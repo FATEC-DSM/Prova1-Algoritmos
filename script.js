@@ -86,7 +86,7 @@ function calcularHolerite() {
         impostoRenda = salario;
     }
 
-    const totalDescontos = valorMaxVT + valorMaxVR + descontoFaltas + descontoSeguroVida + parseFloat(descontoINSS);
+    const totalDescontos = valorMaxVT + valorMaxVR + descontoFaltas + descontoSeguroVida + parseFloat(descontoINSS) + parseFloat(impostoRenda);
     const salarioLiquido = salario + valorHoraExtra - totalDescontos;
 
     const resultElement = document.getElementById('result');
