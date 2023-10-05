@@ -71,6 +71,21 @@ function calcularHolerite() {
         descontoINSS = (salario * 0.14).toFixed(2);
     }
 
+    let impostoRenda = 0;
+    if (salario < 2112){
+        impostoRenda = 0;
+    } else if (salario < 2826.65) {
+        impostoRenda = salario * 0.075;
+    } else if (salario < 3751.05) {
+        impostoRenda = salario * 0.15;
+    } else if (salario < 4664.68) {
+        impostoRenda = salario * 0.225;
+    } else if (salario > 4664.69) {
+        impostoRenda = salario * 0.275
+    } else {
+        impostoRenda = salario;
+    }
+
     const totalDescontos = valorMaxVT + valorMaxVR + descontoFaltas + descontoSeguroVida + parseFloat(descontoINSS);
     const salarioLiquido = salario + valorHoraExtra - totalDescontos;
 
@@ -85,8 +100,10 @@ function calcularHolerite() {
         <span>Desconto Faltas: R$ ${descontoFaltas.toFixed(2)}</span>
         <span>Desconto Seguro de Vida: R$ ${descontoSeguroVida.toFixed(2)}</span>
         <span>Desconto INSS: R$ ${descontoINSS}</span>
+        <span>Desconto IR: R$ ${impostoRenda}</span>
         <br>
         <span class="total">Total de Descontos: R$ ${totalDescontos.toFixed(2)}</span>
         <span class="total">Salário Líquido: R$ ${salarioLiquido.toFixed(2)}</span>
+        
     `;
 }
