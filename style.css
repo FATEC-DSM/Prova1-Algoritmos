@@ -72,9 +72,14 @@ button:hover {
 
 #result {
     margin-top: 20px;
-    font-weight: bolder;
 }
 
 span {
   display: block;
+}
+
+.total {
+  font-weight: bolder;
+  color: #444444;
+  font-size: 1.2rem;
 }
